@@ -1,5 +1,7 @@
 # Nabu
 
+Formattatore e sintetizzatore su richiesta per testo tecnico e handoff tra agenti. Non è uno strumento di risparmio token.
+
 Preprocessore semantico e postprocessore leggero per output tecnici. Filtra rumore, comprime contenuto e preserva struttura quando il testo contiene codice o dati formattati.
 
 Source of truth: `SKILL.md`.
@@ -44,6 +46,13 @@ Source of truth: `SKILL.md`.
 - log e report lunghi
 - code review e analisi
 - passaggi di contesto a un altro agente
+
+## Costo e risparmio
+
+- La skill occupa 597 token di contesto (o200k_base).
+- Sui 10 test documentati il saldo netto è 254 -> 242 token (-4,7%).
+- Il valore sta nella struttura e nella fedeltà dell'output, non nella riduzione dei token.
+- Il filtro dell'input avviene dentro il modello, quindi non riduce i token di input.
 
 ## Miglioramenti verificati
 
@@ -116,10 +125,8 @@ Il job di integrazione fallisce con timeout durante i test end-to-end. Possibile
 Output:
 
 ```text
-- CI: test end-to-end falliscono
-- Punto critico: timeout nel flusso A -> B
+- CI: job di integrazione fallisce per timeout nei test end-to-end
 - Ipotesi: regressione nel pacchetto X
-- Azione: riprodurre localmente e verificare il diff
 ```
 
 ### `telegramma in json`
@@ -138,5 +145,6 @@ Output:
 
 - se il testo contiene codice o dati strutturati, non alterare la sintassi
 - se l'obiettivo e ambiguo, fai una sola domanda di chiarimento
+- L'output non contiene fatti assenti dall'input.
 - il risultato deve essere piu corto dell'input, salvo casi gia molto brevi
 
